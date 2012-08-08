@@ -1,0 +1,44 @@
+    {% extends "base.html" %}
+    {% block content %}
+
+        {% if kategorie %}
+
+        <table border="1">
+        <thead>
+        <tr>
+            <th>lp.</th>
+            <th>nazwa</th>
+            <th>adres</th>
+            <th>akustyka</th>
+            <th>cena</th>
+            <th>instrumenty</th>
+            <th>sprzet</th>
+            <th>opinie</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for kategoria in kategorie %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ kategoria.nazwa}}</td>
+                <td>{{ kategoria.adres}}</td>
+                <td>{{ kategoria.akustyka}}</td>
+                <td>{{ kategoria.cena}}</td>
+                <td>{{ kategoria.instrumenty}}</td>
+                <td>{{ kategoria.sprzet}}</td>
+                <td><a href="/opinie/{{ kategoria.pk }}">pokaz</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+        {% else %}
+            nie ma chuja we wsi
+        {% endif %}
+
+
+    brak kategorii
+        <div id="content2">
+        {% block content2 %}{% endblock %}
+    </div>
+
+    {% endblock %}
