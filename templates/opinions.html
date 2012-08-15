@@ -1,0 +1,20 @@
+    {% extends "index.html" %}
+
+    {% block content %}
+        Sala: {{room_name }}
+        {% if opinions %}
+            {% for opinion in opinions %}
+                <p>
+                    {{ opinion.text }}
+
+                    {{ opinion.date }}
+                </p>
+
+            {% endfor %}
+        {% else %}
+            You can write first opinion
+        {% endif %}
+        <a href="/addOpinions/{{ room_pk }}">dodaj opinie</a>
+    {% endblock %}
+
+

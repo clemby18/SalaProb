@@ -1,7 +1,7 @@
 from django import forms
 
 
-class OpinieForm(forms.Form):
-    tekst = forms.CharField()
+class OpinionForm(forms.Form):
+    text = forms.CharField()
 
 

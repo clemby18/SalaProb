@@ -1,17 +1,13 @@
 # -*- coding: utf-8 -*-
 from django.contrib import admin
-from aplikacja.models import Komentarz, Sala
+from aplikacja.models import Comment, Room
 
 
-#class cosiek(admin.ModelAdmin):
-#    list_display =
-
-
-admin.site.register(Sala)
+admin.site.register(Room)
 
 
 class CommentAdmin(admin.ModelAdmin):
-    list_display = ('sala', 'tekst', 'data')
-    list_filter = ['data']
+    list_display = ('room', 'text', 'date')
+    list_filter = ['date']
 
-admin.site.register(Komentarz, CommentAdmin)
+admin.site.register(Comment, CommentAdmin)

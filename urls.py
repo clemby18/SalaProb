@@ -8,8 +8,8 @@ admin.autodiscover()
 urlpatterns = patterns('aplikacja.views',
     url(r'^admin/', include(admin.site.urls)),
     (r'^$', 'index'),
-    (r'^opinie/(?P<id_kategorii>\d+)', 'opinie'),
+    (r'^opinions/(?P<id_Category>\d+)', 'opinions'),
     (r'^index', 'index'),
-    (r'^dodaj/(?P<id>\d+)', 'dodaj'),
-    (r'^sukces', 'index'),
+    (r'^addOpinions/(?P<id>\d+)', 'addOpinion'),
+    (r'^success', 'index'),
 )

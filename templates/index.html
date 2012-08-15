@@ -1,7 +1,7 @@
     {% extends "base.html" %}
     {% block content %}
 
-        {% if kategorie %}
+        {% if categories %}
 
         <table border="1">
         <thead>
@@ -17,28 +17,29 @@
         </tr>
         </thead>
         <tbody>
-        {% for kategoria in kategorie %}
+        {% for category in categories %}
             <tr>
                 <td>{{ forloop.counter }}</td>
-                <td>{{ kategoria.nazwa}}</td>
-                <td>{{ kategoria.adres}}</td>
-                <td>{{ kategoria.akustyka}}</td>
-                <td>{{ kategoria.cena}}</td>
-                <td>{{ kategoria.instrumenty}}</td>
-                <td>{{ kategoria.sprzet}}</td>
-                <td><a href="/opinie/{{ kategoria.pk }}">pokaz</a></td>
+                <td>{{ category.name}}</td>
+                <td>{{ category.addresss}}</td>
+                <td>{{ category.acoustics}}</td>
+                <td>{{ category.price}}</td>
+                <td>{{ category.instruments}}</td>
+                <td>{{ category.equipment}}</td>
+                <td><a href="/opinions/{{ category.pk }}">pokaz</a></td>
             </tr>
         {% endfor %}
         </tbody>
-    </table>
+        </table>
+
         {% else %}
-            nie ma chuja we wsi
+           no rooms
         {% endif %}
 
-
-    brak kategorii
         <div id="content2">
-        {% block content2 %}{% endblock %}
-    </div>
+        {% block content2 %}
+
+        {% endblock %}
+        </div>
 
     {% endblock %}
