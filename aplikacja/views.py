@@ -19,8 +19,8 @@ def index(request):
     return TemplateResponse(request, 'index.html', context)
 
 
-def opinions(request, id_Category):
-    room = Room.objects.get(pk=id_Category)
+def opinions(request, id_category):
+    room = Room.objects.get(pk=id_category)
     opinions = Comment.objects.filter(room=room)
 
     context = {
