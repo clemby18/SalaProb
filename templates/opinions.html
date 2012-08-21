@@ -6,15 +6,17 @@
             {% for opinion in opinions %}
                 <p>
                     {{ opinion.text }}
-
+                    <br />Data:
                     {{ opinion.date }}
+                    <br />IP:
+                    {{ opinion.ip }}
                 </p>
 
             {% endfor %}
         {% else %}
             You can write first opinion
         {% endif %}
-        <a href="/addOpinions/{{ room_pk }}">dodaj opinie</a>
+        <a href="/add_opinion/{{ room_pk }}">dodaj opinie</a>
     {% endblock %}
 
 

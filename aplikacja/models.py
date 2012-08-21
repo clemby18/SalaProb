@@ -32,3 +32,17 @@ class Comment(models.Model):
         return str(self.room)
     def __unicode__(self):
         return unicode(self.room)
+
+
+class User(models.Model):
+    first_name = models.CharField(u'Imię', max_length=20)
+    last_name = models.CharField(u'Nazwisko', max_length=20)
+    username = models.CharField(u'Login', max_length=20)
+    password = models.CharField(u'Hasło', max_length=20)
+
+    class Meta:
+        verbose_name = "User"
+        verbose_name_plural = "Users"
+
+    def __unicode__(self):
+        return unicode(self.username)

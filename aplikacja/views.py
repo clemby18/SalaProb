@@ -8,15 +8,36 @@ from django.template import RequestContext
 from django.shortcuts import render_to_response
 from django.template.response import TemplateResponse
 from django.views.generic.list_detail import object_list
-from aplikacja.forms import OpinionForm
-from aplikacja.models import Room, Comment
+from aplikacja.forms import OpinionForm, UserForm
+from aplikacja.models import Room, Comment, User
 
 
 def index(request):
-
     categories = Room.objects.all()
     context = {'categories': categories}
     return TemplateResponse(request, 'index.html', context)
+
+
+def registration(request):
+    if request.method == 'POST':
+        form = UserForm(request.POST)
+        if form.is_valid():
+            user = User()
+            user.first_name = form.cleaned_data['first_name']
+            user.last_name = form.cleaned_data['last_name']
+            user.username = form.cleaned_data['username']
+            user.password = form.cleaned_data['password']
+            user.save()
+
+            return HttpResponseRedirect('/success/')
+    else:
+        form = UserForm()
+
+    return TemplateResponse(request, 'registration.html', {'form': form})
+
+
+def login(request):
+    return TemplateResponse(request, 'login.html')
 
 
 def opinions(request, id_category):
@@ -54,5 +75,9 @@ def add_opinion(request, id):
         form = OpinionForm()
 
     return TemplateResponse(request, 'add_opinion.html', {'form': form})
+
+
+def success(request):
+    return TemplateResponse(request, 'success.html')
 
 
