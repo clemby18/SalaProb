@@ -31,7 +31,7 @@ def opinions(request, id_category):
     return TemplateResponse(request, 'opinions.html', context)
 
 
-def addOpinion(request, id):
+def add_opinion(request, id):
     if request.method == 'POST':
         form = OpinionForm(request.POST)
         if form.is_valid():
@@ -39,10 +39,20 @@ def addOpinion(request, id):
             opinion.text = form.cleaned_data['text']
             opinion.date = datetime.today()
             opinion.room = Room.objects.get(pk=id)
+
+            x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+            if x_forwarded_for:
+                ip = x_forwarded_for.split(',')[0]
+            else:
+                ip = request.META.get('REMOTE_ADDR')
+
+            opinion.ip = ip
             opinion.save()
 
             return HttpResponseRedirect('/success/')
     else:
         form = OpinionForm()
 
-    return TemplateResponse(request, 'addOpinion.html', {'form': form})
+    return TemplateResponse(request, 'add_opinion.html', {'form': form})
+
+
