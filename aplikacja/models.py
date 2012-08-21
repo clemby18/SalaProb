@@ -2,14 +2,13 @@
 
 from django.db import models
 
-# Create your models here.
 class Room(models.Model):
     name = models.CharField(u'Nazwa Sali', max_length=20)
-    address = models.CharField(max_length=50, verbose_name='Adres Sali')
-    acoustics = models.CharField(max_length=20, verbose_name='Akustyka Sali')
-    price = models.FloatField(max_length=10, verbose_name='Cena Za Godzine')
-    instruments = models.CharField(max_length=200, verbose_name='Dostepne Instrumenty')
-    equipment = models.CharField(max_length=200, verbose_name='Dostepny Sprzet')
+    address = models.CharField(u'Adres Sali',max_length=50)
+    acoustics = models.CharField(u'Akustyka Sali', max_length=20)
+    price = models.FloatField(u'Cena Za Godzine', max_length=10)
+    instruments = models.CharField(u'Dostepne Instrumenty', max_length=200)
+    equipment = models.CharField(u'Dostepny Sprzet', max_length=200)
 
     class Meta:
         verbose_name = "Room"
