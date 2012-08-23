@@ -8,8 +8,10 @@ from django.template import RequestContext
 from django.shortcuts import render_to_response
 from django.template.response import TemplateResponse
 from django.views.generic.list_detail import object_list
+from django.views.generic.simple import direct_to_template
 from aplikacja.forms import OpinionForm, UserForm
 from aplikacja.models import Room, Comment, User
+from django.contrib.auth import authenticate, login, logout
 
 
 def index(request):
@@ -25,6 +27,7 @@ def registration(request):
             user = User()
             user.first_name = form.cleaned_data['first_name']
             user.last_name = form.cleaned_data['last_name']
+            user.email = form.cleaned_data['email']
             user.username = form.cleaned_data['username']
             user.password = form.cleaned_data['password']
             user.save()
@@ -36,8 +39,33 @@ def registration(request):
     return TemplateResponse(request, 'registration.html', {'form': form})
 
 
-def login(request):
-    return TemplateResponse(request, 'login.html')
+def my_login(request):
+    if request.method == 'POST':
+        user = authenticate(username=request.POST['username'], password=request.POST['password'])
+        if user is not None:
+            if user.is_active:
+                login(request, user)
+                # success
+                return TemplateResponse(request, '/success.html')
+            else:
+                # disabled account
+                return direct_to_template(request, 'inactive_account.html')
+        else:
+            # invalid login
+            return direct_to_template(request, 'invalid_login.html')
+
+
+def my_logout(request):
+    logout(request)
+    return direct_to_template(request, 'logout.html')
+
+
+def invalid_login(request):
+    return direct_to_template(request, 'invalid_login.html')
+
+
+def inactive_account(request):
+    return direct_to_template(request, 'inactive_account.html')
 
 
 def opinions(request, id_category):

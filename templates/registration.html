@@ -9,12 +9,20 @@
                 <tr>
                     <td>Imię</td>
                     <td>{{ form.first_name }}</td>
-                    <td>walidator sprawdza imie</td>
+                    <td>walidator sprawdza imie samanta</td>
                 </tr>
                 <tr>
                     <td>Nazwisko</td>
                     <td>{{ form.last_name }}</td>
                     <td>walidator sprawdza haslo</td>
+                </tr>
+                <tr>
+
+                    <td>E-mail</td>
+                    <td>{{ form.email }}</td>
+                    {%  for email in email %}
+                        <td>{{ email.validate_email }}</td>
+                    {% endfor %}
                 </tr>
                 <tr>
                     <td>Login</td>
