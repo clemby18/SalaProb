@@ -1,3 +1,4 @@
+import os
 # Django settings for SalaProb project.
 
 DEBUG = True
@@ -104,7 +105,7 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'SalaProb.urls'
 
 TEMPLATE_DIRS = (
-	 'templates',
+	 os.path.join(os.path.dirname(__file__), 'templates').replace('\\', '/'),
 )
 
 INSTALLED_APPS = (
@@ -115,7 +116,8 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'SalaProb.aplikacja'
+    'accounts',
+    'rooms',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )
