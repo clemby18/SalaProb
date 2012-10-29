@@ -1,11 +1,14 @@
 # coding=utf-8
 from django import forms
-from django.contrib.auth import login
+from django.contrib.auth import login, authenticate, models
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from django.http import HttpResponseRedirect
+from django.contrib.auth.models import User
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render_to_response
 from django.template.context import RequestContext
 from django.template.response import TemplateResponse
+
 
 class RegisterForm(UserCreationForm):
     first_name = forms.CharField(label=u'Imię')
@@ -24,27 +27,47 @@ class RegisterForm(UserCreationForm):
 
 
 def register(request):
-    form = RegisterForm(request.POST or None)
-    context = {'form': form}
-
-    if form.is_valid():
-        form.save()
-        return HttpResponseRedirect ('/done/')
-
-    return render_to_response('accounts/register.html', context, context_instance = RequestContext(request))
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            new_user = form.save()
+            return HttpResponseRedirect('/done/')
+    else:
+        form = UserCreationForm()
+    return render_to_response('accounts/register.html', {'form': form, }, context_instance = RequestContext(request))
 
 
 def login_view(request):
-    form = AuthenticationForm(request.POST or None)
-    context = {'form': form}
+    form = AuthenticationForm(None, request.POST or None)
 
     if form.is_valid():
         login(request, form.get_user())
-        return TemplateResponse(request, 'index.html')
+        next_page = request.GET.get('next')
+        if next_page:
+            return HttpResponseRedirect(next_page)
 
-    return render_to_response('accounts/login.html', context, context_instance = RequestContext(request))
+        return HttpResponseRedirect('/welcome/')
+
+    context = {'form': form}
+    return TemplateResponse(request, 'accounts/login.html', context)
+
+def test_view(request):
+    return HttpResponse('To tylko test.<br/><a href="/">strona główna</a>')
+
+test_view = login_required(test_view, login_url='/logowanie/')
+
 
 
 def done(request):
     return TemplateResponse(request, 'accounts/done.html')
+
+def welcome(request):
+    user = form.get_user()
+    context = {'user': user}
+    return TemplateResponse(request, 'accounts/welcome.html', context)
+
+def users(request):
+    allusers = User.objects.all()
+    context = {'users': allusers}
+    return TemplateResponse(request, 'accounts/users.html', context)
 

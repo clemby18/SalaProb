@@ -12,6 +12,8 @@ urlpatterns += patterns('accounts.forms',
     url(r'^register/$', 'register'),
     url(r'^login/$', 'login_view'),
     url(r'^done/$', 'done'),
+    url(r'^welcome/$', 'welcome'),
+    url(r'^users/$', 'users'),
 )
 
 urlpatterns += patterns('rooms.views',
