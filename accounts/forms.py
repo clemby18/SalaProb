@@ -62,6 +62,7 @@ def done(request):
     return TemplateResponse(request, 'accounts/done.html')
 
 def welcome(request):
+    form = AuthenticationForm(None, request.POST or None)
     user = form.get_user()
     context = {'user': user}
     return TemplateResponse(request, 'accounts/welcome.html', context)
