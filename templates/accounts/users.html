@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block first %}
+    {% if users %}
+
+    <table border="1">
+        <thead>
+        <tr>
+            <th>lp.</th>
+            <th>login</th>
+            <th>password</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ user.username }}</td>
+            <td>{{ user.password }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+        no users
+    {% endif %}
+
+{% endblock %}
