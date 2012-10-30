@@ -9,17 +9,16 @@
                     <td>{{ opinion.text }}</td>
                     <td>Data dodania: {{ opinion.date }}</td>
                     <td>IP: {{ opinion.ip }}</td>
+                    <td>SIP: {{ opinion.short_ip }}</td>
                 </tr>
             {% endfor %}
             </table>
         {% else %}
             You can write first opinion
         {% endif %}
-        {% if request.user.is_authenticated %}
-            <a href="/add_opinion/{{ room_pk }}">dodaj opinie</a>
-        {% else %}
-            <a href="/c_add_opinion/{{ room_pk }}">dodaj opinie</a>
-        {% endif %}
+        
+        <a href="/add_opinion/{{ room_pk }}">dodaj opinie</a>
+
     {% endblock %}
 
 

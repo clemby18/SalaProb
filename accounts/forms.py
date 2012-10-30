@@ -10,20 +10,20 @@ from django.template.context import RequestContext
 from django.template.response import TemplateResponse
 
 
-class RegisterForm(UserCreationForm):
-    first_name = forms.CharField(label=u'Imię')
-    last_name = forms.CharField(label=u'Nazwisko')
-    address = forms.CharField(label=u'Adres', required=False)
-
-
-    def save(self, commit=True):
-        user = super(UserCreationForm, self).save(commit=False)
-        user.first_name = self.cleaned_data["first_name"]
-        user.last_name = self.cleaned_data["last_name"]
-        print self.cleaned_data['address']
-        if commit:
-            user.save()
-        return user
+#class RegisterForm(UserCreationForm):
+#    first_name = forms.CharField(label=u'Imię')
+#    last_name = forms.CharField(label=u'Nazwisko')
+#    address = forms.CharField(label=u'Adres', required=False)
+#
+#
+#    def save(self, commit=True):
+#        user = super(UserCreationForm, self).save(commit=False)
+#        user.first_name = self.cleaned_data["first_name"]
+#        user.last_name = self.cleaned_data["last_name"]
+#        print self.cleaned_data['address']
+#        if commit:
+#            user.save()
+#        return user
 
 
 def register(request):
@@ -54,8 +54,6 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect('/index/')
-    #return render_to_response('index.html', context_instance = RequestContext(request))
-    #return HttpResponse("Udało się")
 
 
 def done(request):

@@ -48,42 +48,51 @@ def add_opinion(request, id):
                     ip = request.META.get('REMOTE_ADDR')
 
                 opinion.ip = ip
+                s_ip = ip.split('.')
+                opinion.short_ip = s_ip[0] + '.' + s_ip[1] + '.*.*'
                 opinion.save()
 
                 return HttpResponseRedirect('/index/')
         else:
             form = OpinionForm()
 
-        return TemplateResponse(request, 'add_opinion.html', {'form': form})
+        return TemplateResponse(request, 'accounts/add_opinion.html', {'form': form})
 
     else:
+
         return HttpResponseRedirect('/c_add_opinion/1')
 
 
 def c_add_opinion(request, id):
+    if not request.user.is_authenticated():
+        if request.method == 'POST':
+            form = CaptchaOpinionForm(request.POST)
+            if form.is_valid():
+                opinion = Comment()
+                opinion.text = form.cleaned_data['text']
+                opinion.date = datetime.today()
+                opinion.room = Room.objects.get(pk=id)
 
-    if request.method == 'POST':
-        form = CaptchaOpinionForm(request.POST)
-        if form.is_valid():
-            opinion = Comment()
-            opinion.text = form.cleaned_data['text']
-            opinion.date = datetime.today()
-            opinion.room = Room.objects.get(pk=id)
+                x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+                if x_forwarded_for:
+                    ip = x_forwarded_for.split(',')[0]
+                else:
+                    ip = request.META.get('REMOTE_ADDR')
 
-            x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
-            if x_forwarded_for:
-                ip = x_forwarded_for.split(',')[0]
-            else:
-                ip = request.META.get('REMOTE_ADDR')
+                opinion.ip = ip
+                s_ip = ip.split('.')
+                opinion.short_ip = s_ip[0] + '.' + s_ip[1] + '.*.*'
+                opinion.save()
 
-            opinion.ip = ip
-            opinion.save()
+                return HttpResponseRedirect('/index/')
+        else:
+            form = CaptchaOpinionForm()
 
-            return HttpResponseRedirect('/index/')
+        return TemplateResponse(request, 'accounts/c_add_opinion.html', {'form': form})
+
     else:
-        form = CaptchaOpinionForm()
 
-    return TemplateResponse(request, 'add_opinion.html', {'form': form})
+        return HttpResponseRedirect('/add_opinion/1')
 
 
 def some_view(request):

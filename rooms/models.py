@@ -23,6 +23,7 @@ class Comment(models.Model):
     text = models.TextField(verbose_name=u'Opinie')
     date = models.DateTimeField(verbose_name=u'Data dodania')
     ip = models.IPAddressField(verbose_name=u'Adres ip')
+    short_ip = models.CharField(verbose_name=u'Początek adresu ip', max_length=11)
 
 
     class Meta:
