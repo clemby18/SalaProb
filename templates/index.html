@@ -1,5 +1,13 @@
     {% extends "base.html" %}
     {% block first %}
+
+        {% if user %}
+        <h2> Zalogowany: {{ user.username }}</h2>
+        <h5> <a href="/logout/">Wyloguj</a></h5>
+        {% else %}
+        <h2> <a href="/register/">Zaloguj się</a></h2>
+        {% endif %}
+
         {% if categories %}
 
         <table border="1">

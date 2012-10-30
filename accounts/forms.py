@@ -1,6 +1,6 @@
 # coding=utf-8
 from django import forms
-from django.contrib.auth import login, authenticate, models
+from django.contrib.auth import login, logout, authenticate, models
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
@@ -51,11 +51,11 @@ def login_view(request):
     context = {'form': form}
     return TemplateResponse(request, 'accounts/login.html', context)
 
-def test_view(request):
-    return HttpResponse('To tylko test.<br/><a href="/">strona główna</a>')
-
-test_view = login_required(test_view, login_url='/logowanie/')
-
+def logout_view(request):
+    logout(request)
+    return HttpResponseRedirect('/index/')
+    #return render_to_response('index.html', context_instance = RequestContext(request))
+    #return HttpResponse("Udało się")
 
 
 def done(request):
@@ -68,7 +68,14 @@ def welcome(request):
     return TemplateResponse(request, 'accounts/welcome.html', context)
 
 def users(request):
-    allusers = User.objects.all()
-    context = {'users': allusers}
+    all_users = User.objects.all()
+    context = {'users': all_users}
     return TemplateResponse(request, 'accounts/users.html', context)
+
+def test_view(request):
+    return HttpResponse('To tylko test.<br/><a href="/">strona główna</a>')
+
+test_view = login_required(test_view, login_url='/logowanie/')
+
+
 
